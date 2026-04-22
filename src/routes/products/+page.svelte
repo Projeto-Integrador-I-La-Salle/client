@@ -5,7 +5,10 @@
 	import ProductGrid from '$lib/components/products/ProductGrid.svelte';
 	import PromoCarousel from '$lib/components/products/PromoCarousel.svelte';
 	import TopBar from '$lib/components/products/TopBar.svelte';
-	import { categories, filters, products } from '$lib/data/products';
+	import { categories, filters } from '$lib/data/products';
+	import type { PageData } from './$types';
+
+	let { data }: { data: PageData } = $props();
 </script>
 
 <svelte:head>
@@ -23,7 +26,10 @@
 		<PromoCarousel />
 		<CategoryScroller {categories} />
 		<FilterChips {filters} />
-		<ProductGrid {products} />
+		{#if data.productsError}
+			<p class="px-1 text-sm text-red-600">{data.productsError}</p>
+		{/if}
+		<ProductGrid products={data.products.content} />
 	</main>
 
 	<BottomNav />

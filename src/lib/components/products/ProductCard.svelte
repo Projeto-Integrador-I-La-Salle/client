@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Product } from '$lib/data/products';
+	import { productImageUrl, type Product } from '$lib/data/products';
 
 	let { product }: { product: Product } = $props();
 </script>
@@ -11,7 +11,7 @@
 		<img
 			alt={product.name}
 			class="h-full w-full object-contain mix-blend-multiply transition-transform group-hover:scale-105"
-			src={product.image}
+			src={productImageUrl(product.images[0])}
 		/>
 		{#if product.sale}
 			<span class="absolute left-1 top-1 rounded bg-blue-700 px-1 text-[8px] font-bold uppercase text-white">
