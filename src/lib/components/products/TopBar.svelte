@@ -8,7 +8,7 @@
 			<button class="cursor-pointer text-blue-800" aria-label="Open menu">
 				<span class="material-symbols-outlined text-xl">menu</span>
 			</button>
-			<h1 class="text-lg font-extrabold tracking-tight text-blue-800">Apothecary</h1>
+			<h1 class="text-lg font-extrabold tracking-tight text-blue-800">Farmacias Economica</h1>
 		</div>
 
 		<div class="mx-4 hidden max-w-sm flex-1 md:block">

@@ -6,7 +6,7 @@
 </script>
 
 <section class="grid grid-cols-2 gap-2 px-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
-	{#each products as product}
+	{#each products as product (product.id)}
 		<ProductCard {product} />
 	{/each}
 </section>

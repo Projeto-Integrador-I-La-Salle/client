@@ -7,6 +7,8 @@
 <section class="flex flex-wrap gap-1.5 px-1">
 	{#each filters as filter}
 		<button
+			type="button"
+			aria-pressed={filter.active ? 'true' : 'false'}
 			class={`cursor-pointer rounded px-3 py-1 text-[10px] font-semibold ${
 				filter.active ? 'bg-blue-700 text-white' : 'bg-slate-200 text-slate-600'
 			}`}
