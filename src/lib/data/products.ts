@@ -12,7 +12,7 @@ export type Filter = {
 };
 
 /** Base URL for product images (API serves files under /images/). */
-export const PRODUCT_IMAGE_BASE = env.PUBLIC_PRODUCT_IMAGE_BASE_URL || 'http://192.168.0.103:3000/images/';
+export const PRODUCT_IMAGE_BASE = env.PUBLIC_PRODUCT_IMAGE_BASE_URL || 'http://localhost:3000/images/';
 
 /** Shown when the product has no image (served from `static/`). */
 export const DEFAULT_PRODUCT_IMAGE = '/product-placeholder.svg';

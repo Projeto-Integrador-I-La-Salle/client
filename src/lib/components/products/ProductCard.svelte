@@ -4,8 +4,9 @@
 	let { product }: { product: Product } = $props();
 </script>
 
-<article
+<a
 	class="group flex cursor-pointer flex-col overflow-hidden rounded-md border border-slate-200 bg-white transition-all hover:shadow-md"
+	href={`/products/${product.id}`}
 >
 	<div class="relative aspect-square bg-slate-100 p-2">
 		<img
@@ -16,16 +17,19 @@
 			src={productImageUrl(product.images?.[0])}
 		/>
 		{#if product.sale}
-			<span class="absolute left-1 top-1 rounded bg-blue-700 px-1 text-[8px] font-bold uppercase text-white">
+			<span
+				class="absolute top-1 left-1 rounded bg-blue-700 px-1 text-[8px] font-bold text-white uppercase"
+			>
 				SALE
 			</span>
 		{/if}
 		{#if product.rxRequired}
 			<span
-				class="absolute right-1 top-1 flex items-center gap-0.5 rounded bg-red-100 px-1 text-[8px] font-bold uppercase text-red-700"
+				class="absolute top-1 right-1 flex items-center gap-0.5 rounded bg-red-100 px-1 text-[8px] font-bold text-red-700 uppercase"
 			>
-				<span class="material-symbols-outlined text-[10px]" style="font-variation-settings: 'FILL' 1;"
-					>description</span
+				<span
+					class="material-symbols-outlined text-[10px]"
+					style="font-variation-settings: 'FILL' 1;">description</span
 				>
 				Rx
 			</span>
@@ -34,14 +38,18 @@
 
 	<div class="flex flex-1 flex-col justify-between space-y-1 p-2">
 		<div>
-			<p class="text-[8px] font-bold uppercase tracking-tighter text-slate-500">{product.brand}</p>
-			<h4 class="line-clamp-2 text-[11px] font-medium leading-tight text-slate-900">{product.name}</h4>
+			<p class="text-[8px] font-bold tracking-tighter text-slate-500 uppercase">{product.brand}</p>
+			<h4 class="line-clamp-2 text-[11px] leading-tight font-medium text-slate-900">
+				{product.name}
+			</h4>
 		</div>
 
 		<div class="mt-auto flex items-center justify-between pt-1">
 			<div class="flex flex-col">
 				{#if product.originalPrice}
-					<span class="text-[9px] text-slate-500 line-through">${product.originalPrice.toFixed(2)}</span>
+					<span class="text-[9px] text-slate-500 line-through"
+						>${product.originalPrice.toFixed(2)}</span
+					>
 				{/if}
 				<span class="text-sm font-bold text-blue-700">${product.price.toFixed(2)}</span>
 			</div>
@@ -53,4 +61,4 @@
 			</button>
 		</div>
 	</div>
-</article>
+</a>
