@@ -1,6 +1,9 @@
 <script lang="ts">
 	import type { PageProps } from './$types';
 	import { productImageUrl, type Product } from '$lib/data/products';
+	import AddedToCartModal from '$lib/components/products/AddedToCartModal.svelte';
+	import { goto } from '$app/navigation';
+	import { redirect } from '@sveltejs/kit';
 
 	let { data }: PageProps = $props();
 
@@ -8,6 +11,7 @@
 
 	let quantity = $state(1);
 	let scrolled = $state(false);
+	let showModal = $state(false);
 
 	function increment() {
 		quantity++;
@@ -18,11 +22,22 @@
 	}
 
 	function handleAddToCart() {
-		console.log('Adicionando ao carrinho:', product?.name, 'quantidade:', quantity);
+		const cart: Array<Product> = JSON.parse(localStorage.getItem('cart') ?? '[]');
+
+		const newProduct = {
+			...product,
+			quantity: quantity
+		};
+
+		const products = [...cart, newProduct];
+
+		localStorage.setItem('cart', JSON.stringify(products));
+
+		showModal = true;
 	}
 
 	// Scroll tracking for header shadow
-	$effect(() => {
+	$effect(function () {
 		function onScroll() {
 			scrolled = window.scrollY > 10;
 		}
@@ -68,6 +83,20 @@
 </header>
 
 <main class="main-canvas">
+	<AddedToCartModal
+		open={showModal}
+		{product}
+		onViewCart={function () {
+			redirect(200, '/cart');
+		}}
+		onContinueShopping={function () {
+			showModal = false;
+		}}
+		onClose={function () {
+			showModal = false;
+		}}
+	/>
+
 	<div class="product-grid">
 		<!-- Product Image -->
 		<section class="image-hero group">

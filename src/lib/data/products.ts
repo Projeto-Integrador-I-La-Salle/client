@@ -33,6 +33,7 @@ export type Product = {
 	name: string;
 	images?: string[] | null;
 	price: number;
+	quantity: number;
 	originalPrice?: number;
 	sale?: boolean;
 	rxRequired?: boolean;
@@ -55,50 +56,3 @@ export const filters: Filter[] = [
 	{ label: 'Sale' }
 ];
 
-export const products: Product[] = [
-	{
-		id: 'natures-bounty-vitamin-d3',
-		brand: 'NATURES BOUNTY',
-		name: 'Vitamin D3 Immune Support 50mcg',
-		images: ['natures-bounty-vitamin-d3.webp'],
-		price: 14.5,
-		originalPrice: 18.99,
-		sale: true
-	},
-	{
-		id: 'ventolin-albuterol-inhaler',
-		brand: 'VENTOLIN',
-		name: 'Albuterol Sulfate Inhaler 90mcg',
-		images: ['ventolin-inhaler.webp'],
-		price: 32,
-		rxRequired: true
-	},
-	{
-		id: 'bayer-aspirin-100ct',
-		brand: 'BAYER',
-		name: 'Extra Strength Aspirin (100ct Tablets)',
-		images: ['bayer-aspirin-100ct.webp'],
-		price: 12.99
-	},
-	{
-		id: 'pure-encapsulations-magnesium-120ct',
-		brand: 'PURE ENCAPSULATIONS',
-		name: 'Magnesium Glycinate Complex 120ct',
-		images: ['pure-encapsulations-magnesium-120ct.webp'],
-		price: 28.4
-	},
-	{
-		id: 'cerave-daily-moisturizing-lotion-12oz',
-		brand: 'CERAVE',
-		name: 'Daily Moisturizing Lotion 12oz',
-		images: ['cerave-daily-moisturizing-lotion-12oz.webp'],
-		price: 16.25
-	},
-	{
-		id: 'band-aid-tough-strips-20ct',
-		brand: 'BAND-AID',
-		name: 'Tough Strips Waterproof (20ct)',
-		images: ['band-aid-tough-strips-20ct.webp'],
-		price: 8.99
-	}
-];
