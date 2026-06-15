@@ -2,8 +2,8 @@
 	import type { PageProps } from './$types';
 	import { productImageUrl, type Product } from '$lib/data/products';
 	import AddedToCartModal from '$lib/components/products/AddedToCartModal.svelte';
-	import { goto } from '$app/navigation';
 	import { redirect } from '@sveltejs/kit';
+	import { onMount } from 'svelte';
 
 	let { data }: PageProps = $props();
 
@@ -12,6 +12,7 @@
 	let quantity = $state(1);
 	let scrolled = $state(false);
 	let showModal = $state(false);
+	let isProductAlreadyAddedToCart = $state(false);
 
 	function increment() {
 		quantity++;
@@ -34,9 +35,9 @@
 		localStorage.setItem('cart', JSON.stringify(products));
 
 		showModal = true;
+		isProductAlreadyAddedToCart = true;
 	}
 
-	// Scroll tracking for header shadow
 	$effect(function () {
 		function onScroll() {
 			scrolled = window.scrollY > 10;
@@ -44,20 +45,24 @@
 		window.addEventListener('scroll', onScroll);
 		return () => window.removeEventListener('scroll', onScroll);
 	});
+
+	onMount(function () {
+		const cart: Array<Product> = JSON.parse(localStorage.getItem('cart') ?? '[]');
+		const foundProduct = cart.find((p) => p.id === product.id);
+		isProductAlreadyAddedToCart = !!foundProduct;
+	});
 </script>
 
 <svelte:head>
 	<title>Detalhes do Produto - Farmacias Economica</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<!-- Google Fonts -->
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
 	<link
 		href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Plus+Jakarta+Sans:wght@600;700&display=swap"
 		rel="stylesheet"
 	/>
-	<!-- Material Symbols -->
 	<link
 		href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
 		rel="stylesheet"
@@ -65,17 +70,14 @@
 </svelte:head>
 
 <header class="top-bar" class:scrolled>
-	<!-- Back Navigation -->
 	<button aria-label="Voltar" class="icon-btn -ml-2" onclick={() => history.back()}>
 		<span class="material-symbols-outlined icon-primary">arrow_back</span>
 	</button>
 
-	<!-- Brand/Title -->
 	<div class="flex flex-1 justify-center">
 		<span class="page-title">Detalhes do Produto</span>
 	</div>
 
-	<!-- Cart Action -->
 	<button aria-label="Ver carrinho" class="icon-btn relative -mr-2">
 		<span class="material-symbols-outlined icon-primary">shopping_cart</span>
 		<span class="cart-badge">2</span>
@@ -146,17 +148,37 @@
 				</div>
 			</div>
 
-			<!-- Add to Cart -->
-			<button class="add-to-cart-btn" onclick={handleAddToCart}>
-				<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">
-					shopping_cart
-				</span>
-				<span>Adicionar ao Carrinho</span>
-			</button>
+			<!-- Add to Cart / Already in Cart -->
+			{#if isProductAlreadyAddedToCart}
+				<div class="in-cart-wrapper">
+					<div class="in-cart-control">
+						<button class="in-cart-btn" aria-label="Diminuir quantidade no carrinho">
+							<span class="material-symbols-outlined">remove</span>
+						</button>
+						<div class="in-cart-info">
+							<span class="in-cart-qty">1</span>
+							<span class="in-cart-label">No Carrinho</span>
+						</div>
+						<button class="in-cart-btn" aria-label="Aumentar quantidade no carrinho">
+							<span class="material-symbols-outlined">add</span>
+						</button>
+					</div>
+					<div class="in-cart-success">
+						<span class="material-symbols-outlined in-cart-check">check_circle</span>
+						<span class="in-cart-success-text">Item adicionado com sucesso</span>
+					</div>
+				</div>
+			{:else}
+				<button class="add-to-cart-btn" onclick={handleAddToCart}>
+					<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">
+						shopping_cart
+					</span>
+					<span>Adicionar ao Carrinho</span>
+				</button>
+			{/if}
 
 			<!-- Info Accordions -->
 			<div class="mt-6 flex flex-col gap-4">
-				<!-- Description -->
 				<div class="info-card">
 					<div class="info-card-header">
 						<h3 class="info-card-title">Descrição</h3>
@@ -168,7 +190,6 @@
 					</p>
 				</div>
 
-				<!-- How to Use -->
 				<div class="info-card">
 					<div class="info-card-header">
 						<h3 class="info-card-title">Como Usar</h3>
@@ -180,7 +201,6 @@
 					</p>
 				</div>
 
-				<!-- Warnings -->
 				<div class="warning-card">
 					<div class="mb-2 flex items-center gap-2">
 						<span class="material-symbols-outlined warning-icon">warning</span>
@@ -197,7 +217,6 @@
 </main>
 
 <style>
-	/* ── Scrollbar ── */
 	:global(::-webkit-scrollbar) {
 		width: 0px;
 		background: transparent;
@@ -487,6 +506,86 @@
 	}
 	.add-to-cart-btn:active {
 		transform: scale(0.98);
+	}
+
+	/* ── In-Cart State ── */
+	.in-cart-wrapper {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		margin-top: 0.5rem;
+	}
+
+	.in-cart-control {
+		background-color: #00357f; /* primary */
+		color: #fff;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		border-radius: 0.75rem;
+		padding: 0.5rem;
+		box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+	}
+
+	.in-cart-btn {
+		background: transparent;
+		border: none;
+		color: #fff;
+		cursor: pointer;
+		width: 3rem;
+		height: 3rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 0.5rem;
+		transition: background-color 0.15s;
+		font-size: 24px;
+	}
+	.in-cart-btn:hover {
+		background-color: #004aad;
+	}
+
+	.in-cart-info {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.in-cart-qty {
+		font-family: 'Plus Jakarta Sans', sans-serif;
+		font-size: 20px;
+		line-height: 1;
+		font-weight: 700;
+		color: #fff;
+	}
+
+	.in-cart-label {
+		font-family: 'Inter', sans-serif;
+		font-size: 10px;
+		font-weight: 600;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: rgba(255, 255, 255, 0.85);
+		margin-top: 2px;
+	}
+
+	.in-cart-success {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.25rem;
+		color: #00357f;
+	}
+
+	.in-cart-check {
+		font-size: 16px;
+	}
+
+	.in-cart-success-text {
+		font-family: 'Inter', sans-serif;
+		font-size: 12px;
+		font-weight: 600;
+		line-height: 16px;
 	}
 
 	/* ── Info Cards ── */

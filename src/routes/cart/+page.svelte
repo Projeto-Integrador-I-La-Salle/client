@@ -1,10 +1,14 @@
 <script lang="ts">
+	import OrderFinishedModal from '$lib/components/cart/OrderFinishedModal.svelte';
 	import { productImageUrl, type Product } from '$lib/data/products';
+	import { goto } from '$app/navigation';
 
 	// ── State ──────────────────────────────────────────────
 	let items: Array<Product> = $state(JSON.parse(localStorage.getItem('cart') ?? '[]'));
 
 	let promoCode = $state('');
+	let showSuccess = $state(false);
+
 	const DELIVERY_FEE = 4.99;
 	const FREE_DELIVERY_THRESHOLD = 50;
 
@@ -38,7 +42,8 @@
 	}
 
 	function checkout() {
-		console.log('Finalizando compra...');
+		localStorage.removeItem('cart');
+		showSuccess = true;
 	}
 
 	function fmt(value: number) {
@@ -88,6 +93,15 @@
 
 <!-- Main -->
 <main class="main-canvas">
+	<OrderFinishedModal
+		open={showSuccess}
+		orderId="5678"
+		deliveryEstimate="Amanhã, até as 14h"
+		onBackToHome={function () {
+			goto('/products');
+		}}
+	/>
+
 	<div class="content-layout">
 		<!-- Cart Items -->
 		<section class="flex flex-col gap-4">
