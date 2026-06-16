@@ -41,9 +41,31 @@
 		console.log('Aplicando código:', promoCode);
 	}
 
-	function checkout() {
-		localStorage.removeItem('cart');
-		showSuccess = true;
+	async function checkout() {
+		try {
+			const body = items.map((item) => {
+				return {
+					productId: item.id,
+					quantity: item.quantity
+				};
+			});
+
+			const res = await fetch('http://localhost:3000/orders', {
+				method: 'POST',
+				body: JSON.stringify(body),
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			});
+
+			if (res.status === 201) {
+				localStorage.removeItem('cart');
+				showSuccess = true;
+			}
+		} catch (err) {
+			showSuccess = false;
+			console.error('[ERROR]: an error has ocurred, ', err);
+		}
 	}
 
 	function fmt(value: number) {
