@@ -266,21 +266,21 @@
 
 <!-- Bottom Nav (mobile only) -->
 <nav class="bottom-nav" aria-label="Navegação principal">
-	<a href="/" class="nav-item">
+	<a href="/products" class="nav-item">
 		<span class="material-symbols-outlined">home</span>
 		<span class="nav-label">Inicio</span>
 	</a>
-	<a href="/busca" class="nav-item">
+	<a href="/browse" class="nav-item">
 		<span class="material-symbols-outlined">search</span>
 		<span class="nav-label">Busca</span>
 	</a>
-	<a href="/carrinho" class="nav-item nav-item--active" aria-current="page">
+	<a href="/cart" class="nav-item nav-item--active" aria-current="page">
 		<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;"
 			>shopping_cart</span
 		>
 		<span class="nav-label">Carrinho</span>
 	</a>
-	<a href="/conta" class="nav-item">
+	<a href="/account" class="nav-item">
 		<span class="material-symbols-outlined">person</span>
 		<span class="nav-label">Conta</span>
 	</a>
