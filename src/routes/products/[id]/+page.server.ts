@@ -1,9 +1,9 @@
 import { error } from '@sveltejs/kit';
-import type { PageLoad } from './$types';
+import type { PageServerLoad } from '../$types';
 
-export const load: PageLoad = async ({ params }) => {
+export const load: PageServerLoad = async ({ fetch, params }) => {
     try {
-        const id = params.id;
+        const id: string = params.id;
 
         const res = await fetch(`http://localhost:3000/products/${id}`)
         const data = await res.json()
@@ -12,5 +12,5 @@ export const load: PageLoad = async ({ params }) => {
     } catch {
         error(404, 'Not found');
     }
-};
+}
 

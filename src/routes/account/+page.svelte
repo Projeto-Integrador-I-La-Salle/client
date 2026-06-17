@@ -55,7 +55,7 @@
 	};
 
 	function handleLogout() {
-		console.log('Logout');
+		// TODO: implement
 	}
 </script>
 

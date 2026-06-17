@@ -1,11 +1,11 @@
 <script lang="ts">
-	import type { PageProps } from './$types';
+	import type { PageData } from './$types';
 	import { productImageUrl, type Product } from '$lib/data/products';
 	import AddedToCartModal from '$lib/components/products/AddedToCartModal.svelte';
 	import { redirect } from '@sveltejs/kit';
 	import { onMount } from 'svelte';
 
-	let { data }: PageProps = $props();
+	let { data }: { data: PageData } = $props();
 
 	const product = $derived(data.product);
 

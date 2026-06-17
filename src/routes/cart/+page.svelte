@@ -38,7 +38,7 @@
 	}
 
 	function applyPromo() {
-		console.log('Aplicando código:', promoCode);
+		// TODO: implement
 	}
 
 	async function checkout() {
