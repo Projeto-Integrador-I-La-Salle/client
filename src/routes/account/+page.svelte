@@ -145,7 +145,7 @@
 			<section class="nav-section">
 				<h3 class="section-title">Compras</h3>
 				<div class="card">
-					<a href="#" class="nav-item">
+					<a href="/orders" class="nav-item">
 						<div class="nav-icon secondary-icon">
 							<span class="material-symbols-outlined">receipt_long</span>
 						</div>
