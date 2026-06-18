@@ -4,15 +4,17 @@
 			class="apothecary-gradient flex w-full shrink-0 snap-center items-center gap-4 p-4 text-white"
 		>
 			<div class="flex-1 space-y-2">
-				<span class="rounded bg-white/20 px-2 py-0.5 text-[10px] font-semibold tracking-wide">PROMO</span>
-				<h2 class="text-xl font-extrabold leading-tight">Morning Vitality</h2>
+				<span class="rounded bg-white/20 px-2 py-0.5 text-[10px] font-semibold tracking-wide"
+					>PROMO</span
+				>
+				<h2 class="text-xl leading-tight font-extrabold">Vitalidade Matinal</h2>
 				<p class="text-[11px] leading-snug opacity-90">
-					20% off all premium multivitamins. Expertly formulated.
+					20% todas as multivitaminas premium. Habilmente formulado.
 				</p>
 				<button
 					class="rounded-md bg-white px-3 py-1.5 text-[10px] font-bold text-blue-800 shadow transition-all hover:bg-slate-100 active:scale-95"
 				>
-					Shop Now
+					Compre agora
 				</button>
 			</div>
 			<div class="h-24 w-24 shrink-0 overflow-hidden rounded-lg border border-white/10 shadow-lg">

@@ -12,7 +12,7 @@ export type Filter = {
 };
 
 /** Base URL for product images (API serves files under /images/). */
-export const PRODUCT_IMAGE_BASE = env.PUBLIC_PRODUCT_IMAGE_BASE_URL || 'http://192.168.0.103:3000/images/';
+export const PRODUCT_IMAGE_BASE = env.PUBLIC_PRODUCT_IMAGE_BASE_URL || 'http://192.168.0.104:3000/images/';
 
 /** Shown when the product has no image (served from `static/`). */
 export const DEFAULT_PRODUCT_IMAGE = '/product-placeholder.svg';
@@ -40,19 +40,18 @@ export type Product = {
 };
 
 export const categories: Category[] = [
-	{ name: 'Vitamins', icon: 'pill', active: true },
-	{ name: 'Pain Relief', icon: 'healing' },
-	{ name: 'First Aid', icon: 'medical_services' },
-	{ name: 'Baby', icon: 'child_care' },
-	{ name: 'Skin', icon: 'face' },
-	{ name: 'Allergy', icon: 'respiratory_rate' },
+	{ name: 'Vitaminas', icon: 'pill', active: true },
+	{ name: 'Alivio dor', icon: 'healing' },
+	{ name: 'Bebe', icon: 'child_care' },
+	{ name: 'Pele', icon: 'face' },
+	{ name: 'Alergia', icon: 'respiratory_rate' },
 	{ name: 'Fitness', icon: 'fitness_center' }
 ];
 
 export const filters: Filter[] = [
-	{ label: 'All', active: true },
-	{ label: 'In Stock' },
-	{ label: 'Rx Required' },
-	{ label: 'Sale' }
+	{ label: 'Todos', active: true },
+	{ label: 'Em estoque' },
+	{ label: 'Prescrição' },
+	{ label: 'Venda' }
 ];
 
