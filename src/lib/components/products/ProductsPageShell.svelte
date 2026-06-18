@@ -49,15 +49,17 @@
 <div class="min-h-dvh bg-slate-50 text-xs text-slate-900 antialiased">
 	<TopBar cartCount={2} />
 
-	<main class="mx-auto max-w-7xl space-y-4 px-2 pb-16 pt-14">
+	<main class="mx-auto max-w-7xl space-y-4 px-2 pt-14 pb-16">
 		{#if enableSearch}
 			<section class="rounded-md border border-slate-200 bg-white p-2 shadow-sm">
 				<label class="relative flex items-center" for="browse-search">
 					<span class="sr-only">Buscar por marca ou nome do produto</span>
-					<span class="material-symbols-outlined absolute left-2.5 text-lg text-slate-400">search</span>
+					<span class="material-symbols-outlined absolute left-2.5 text-lg text-slate-400"
+						>search</span
+					>
 					<input
 						id="browse-search"
-						class="w-full rounded-lg border border-slate-200 bg-slate-50 py-2 pl-9 pr-3 text-xs outline-none transition-all focus:ring-1 focus:ring-blue-400/40"
+						class="w-full rounded-lg border border-slate-200 bg-slate-50 py-2 pr-3 pl-9 text-xs transition-all outline-none focus:ring-1 focus:ring-blue-400/40"
 						bind:value={searchTerm}
 						placeholder="Buscar por marca ou nome do produto"
 						type="text"
@@ -88,7 +90,11 @@
 
 <style>
 	:global(.material-symbols-outlined) {
-		font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+		font-variation-settings:
+			'FILL' 0,
+			'wght' 400,
+			'GRAD' 0,
+			'opsz' 20;
 	}
 
 	:global(.no-scrollbar::-webkit-scrollbar) {

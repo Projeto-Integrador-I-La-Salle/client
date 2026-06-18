@@ -2,6 +2,7 @@
 	import OrderFinishedModal from '$lib/components/cart/OrderFinishedModal.svelte';
 	import { productImageUrl, type Product } from '$lib/data/products';
 	import { goto } from '$app/navigation';
+	import BottomNav from '$lib/components/products/BottomNav.svelte';
 
 	// ── State ──────────────────────────────────────────────
 	let items: Array<Product> = $state(JSON.parse(localStorage.getItem('cart') ?? '[]'));
@@ -43,19 +44,15 @@
 
 	async function checkout() {
 		try {
-			const body = items.map((item) => {
-				return {
-					productId: item.id,
-					quantity: item.quantity
-				};
-			});
+			const body = items.map((item) => ({
+				productId: item.id,
+				quantity: item.quantity
+			}));
 
-			const res = await fetch('http://localhost:3000/orders', {
+			const res = await fetch('/api/orders', {
 				method: 'POST',
 				body: JSON.stringify(body),
-				headers: {
-					'Content-Type': 'application/json'
-				}
+				headers: { 'Content-Type': 'application/json' }
 			});
 
 			if (res.status === 201) {
@@ -64,7 +61,7 @@
 			}
 		} catch (err) {
 			showSuccess = false;
-			console.error('[ERROR]: an error has ocurred, ', err);
+			console.error('[ERROR]:', err);
 		}
 	}
 
@@ -262,29 +259,8 @@
 			</div>
 		</aside>
 	</div>
+	<BottomNav />
 </main>
-
-<!-- Bottom Nav (mobile only) -->
-<nav class="bottom-nav" aria-label="Navegação principal">
-	<a href="/products" class="nav-item">
-		<span class="material-symbols-outlined">home</span>
-		<span class="nav-label">Inicio</span>
-	</a>
-	<a href="/browse" class="nav-item">
-		<span class="material-symbols-outlined">search</span>
-		<span class="nav-label">Busca</span>
-	</a>
-	<a href="/cart" class="nav-item nav-item--active" aria-current="page">
-		<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;"
-			>shopping_cart</span
-		>
-		<span class="nav-label">Carrinho</span>
-	</a>
-	<a href="/account" class="nav-item">
-		<span class="material-symbols-outlined">person</span>
-		<span class="nav-label">Conta</span>
-	</a>
-</nav>
 
 <style>
 	/* ── Reset / Global ───────────────────────────────────── */

@@ -1,7 +1,14 @@
 <script>
+	import BottomNav from '$lib/components/products/BottomNav.svelte';
+	import { onMount } from 'svelte';
+
 	// Estado reativo
 	let cartItemCount = 2;
-	let activeOrders = 2;
+	let activeOrders = $state(0);
+
+	onMount(function () {
+		activeOrders = JSON.parse(localStorage.getItem('cart') ?? '[]').length;
+	});
 
 	const menuItems = {
 		conta: [
@@ -214,27 +221,7 @@
 </main>
 
 <!-- Bottom Nav (Mobile) -->
-<nav class="bottom-nav" aria-label="Navegação principal">
-	<a href="/products" class="nav-tab">
-		<span class="material-symbols-outlined">home</span>
-		<span>Inicio</span>
-	</a>
-	<a href="/browse" class="nav-tab">
-		<span class="material-symbols-outlined">search</span>
-		<span>Busca</span>
-	</a>
-	<a href="/cart" class="nav-tab cart-tab">
-		<span class="material-symbols-outlined">shopping_cart</span>
-		<span>Carrinho</span>
-		{#if cartItemCount > 0}
-			<span class="tab-badge" aria-hidden="true"></span>
-		{/if}
-	</a>
-	<a href="/conta" class="nav-tab active">
-		<span class="material-symbols-outlined icon-fill">person</span>
-		<span>Conta</span>
-	</a>
-</nav>
+<BottomNav />
 
 <style>
 	/* ─── Tokens ─────────────────────────────────────────────── */
@@ -271,8 +258,6 @@
 	/* ─── Global resets ──────────────────────────────────────── */
 	:global(*, *::before, *::after) {
 		box-sizing: border-box;
-		margin: 0;
-		padding: 0;
 		-webkit-tap-highlight-color: transparent;
 	}
 
@@ -281,9 +266,6 @@
 		color: var(--on-surface);
 		font-family: var(--font-body);
 		font-size: 14px;
-		line-height: 20px;
-		min-height: 100dvh;
-		padding-bottom: 80px;
 		padding-top: 64px;
 		-webkit-font-smoothing: antialiased;
 	}
@@ -298,10 +280,6 @@
 		font-size: 24px;
 		line-height: 1;
 		user-select: none;
-	}
-
-	.icon-fill {
-		font-variation-settings: 'FILL' 1;
 	}
 
 	/* ─── Header ─────────────────────────────────────────────── */
@@ -672,68 +650,5 @@
 	.logout-btn:hover {
 		background: color-mix(in srgb, var(--error-container) 50%, transparent);
 		color: var(--on-error-container);
-	}
-
-	/* ─── Bottom Nav ─────────────────────────────────────────── */
-	.bottom-nav {
-		position: fixed;
-		bottom: 0;
-		left: 0;
-		right: 0;
-		display: flex;
-		justify-content: space-around;
-		align-items: center;
-		padding: 8px 0;
-		background: var(--surface);
-		border-top: 1px solid var(--outline-variant);
-		z-index: 50;
-	}
-
-	@media (min-width: 768px) {
-		.bottom-nav {
-			display: none;
-		}
-	}
-
-	.nav-tab {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		flex: 1;
-		padding: 4px;
-		border-radius: 8px;
-		color: var(--on-surface-variant);
-		font-size: 10px;
-		font-weight: 600;
-		line-height: 16px;
-		gap: 2px;
-		transition: background 0.15s;
-		position: relative;
-	}
-
-	.nav-tab:hover {
-		background: var(--surface-container-low);
-	}
-
-	.nav-tab.active {
-		color: var(--primary);
-		font-weight: 700;
-	}
-
-	/* Tab badge */
-	.cart-tab {
-		position: relative;
-	}
-
-	.tab-badge {
-		position: absolute;
-		top: 4px;
-		right: calc(25% - 4px);
-		width: 8px;
-		height: 8px;
-		background: var(--error);
-		border-radius: 50%;
-		border: 1.5px solid var(--surface);
 	}
 </style>

@@ -1,5 +1,4 @@
-import { error } from '@sveltejs/kit';
-import type { PageLoad } from './$types';
+import type { PageLoad } from '../cart/$types';
 
 export const load: PageLoad = async () => {
 	try {
@@ -9,7 +8,7 @@ export const load: PageLoad = async () => {
 
 		return { orders: data.content }
 	} catch {
-		error(404, 'Not found');
+		return { orders: [] }
 	}
 };
 

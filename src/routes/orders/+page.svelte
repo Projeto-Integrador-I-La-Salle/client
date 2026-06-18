@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import BottomNav from '$lib/components/products/BottomNav.svelte';
+	import { productImageUrl } from '$lib/data/products';
 	import type { PageData } from '../$types';
 
 	let activeTab = $state('ativos'); // 'ativos' | 'historico'
@@ -22,8 +24,7 @@
 			items: order.items.map((product) => {
 				return {
 					name: product.productName,
-					image:
-						'https://lh3.googleusercontent.com/aida-public/AB6AXuDyyp8XOIsmVJ12xbRGR1Naf3JFDoYCjW8Rg7G4-mrBRGfdEU3J6Vju3dLpxhWlPVpw-Fw8hvk4bBu1fMT_SVP7ck_KOWvfJ6MD31fMkhWYQnowaWYPOOYrOgCawyEuEIiTFSVhXQdL892zHC78vGi5AwxUISx9FjRLIoiw3GgRvJSZQKwqq33poTfyL84UXP95lHbGOX0_cG7hMG6xIs5GEACUO0wzqvuXAFgZaGqvTrapMfh97vrRk8uVMUiDmwz7ONO4B6a-MuM'
+					image: product.images[0]
 				};
 			}),
 			extraItems: order.items.length - 2
@@ -130,7 +131,7 @@
 						{#each order.items as item}
 							<div class="thumbnail">
 								{#if item.image}
-									<img src={item.image} alt={item.name} />
+									<img src={productImageUrl(item.image)} alt={item.name} />
 								{:else}
 									<span class="material-symbols-outlined icon-placeholder">{item.icon}</span>
 								{/if}
@@ -163,27 +164,8 @@
 			</article>
 		{/each}
 	</div>
+	<BottomNav />
 </main>
-
-<!-- Bottom Nav (mobile) -->
-<nav class="bottom-nav" aria-label="Navegação principal">
-	<a class="nav-tab" href="/products">
-		<span class="material-symbols-outlined">home</span>
-		<span>Inicio</span>
-	</a>
-	<a class="nav-tab" href="/browse">
-		<span class="material-symbols-outlined">search</span>
-		<span>Busca</span>
-	</a>
-	<a class="nav-tab" href="/cart">
-		<span class="material-symbols-outlined">shopping_cart</span>
-		<span>Carrinho</span>
-	</a>
-	<a class="nav-tab active" href="/account">
-		<span class="material-symbols-outlined icon-fill">person</span>
-		<span>Conta</span>
-	</a>
-</nav>
 
 <style>
 	/* ─── Tokens ─────────────────────────────────────────────── */
@@ -214,8 +196,6 @@
 
 	:global(*, *::before, *::after) {
 		box-sizing: border-box;
-		margin: 0;
-		padding: 0;
 		-webkit-tap-highlight-color: transparent;
 	}
 
