@@ -2,6 +2,7 @@
 	import type { PageData } from './$types';
 	import { productImageUrl, type Product } from '$lib/data/products';
 	import AddedToCartModal from '$lib/components/products/AddedToCartModal.svelte';
+	import { trackProductView, trackProductAddedToCart } from '$lib/server/analytics';
 	import { redirect } from '@sveltejs/kit';
 	import { onMount } from 'svelte';
 
@@ -34,6 +35,9 @@
 
 		localStorage.setItem('cart', JSON.stringify(products));
 
+		// Track analytics
+		trackProductAddedToCart(product.id, product.name, product.price);
+
 		showModal = true;
 		isProductAlreadyAddedToCart = true;
 	}
@@ -47,6 +51,9 @@
 	});
 
 	onMount(function () {
+		// Track product view
+		trackProductView(product.id, product.name);
+
 		const cart: Array<Product> = JSON.parse(localStorage.getItem('cart') ?? '[]');
 		const foundProduct = cart.find((p) => p.id === product.id);
 		isProductAlreadyAddedToCart = !!foundProduct;

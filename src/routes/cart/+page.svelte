@@ -1,6 +1,7 @@
 <script lang="ts">
 	import OrderFinishedModal from '$lib/components/cart/OrderFinishedModal.svelte';
 	import { productImageUrl, type Product } from '$lib/data/products';
+	import { trackCheckoutCompleted } from '$lib/server/analytics';
 	import { goto } from '$app/navigation';
 	import BottomNav from '$lib/components/products/BottomNav.svelte';
 
@@ -56,6 +57,11 @@
 			});
 
 			if (res.status === 201) {
+				// Track checkout for each item
+				items.forEach((item) => {
+					trackCheckoutCompleted(item.id, item.name);
+				});
+
 				localStorage.removeItem('cart');
 				showSuccess = true;
 			}

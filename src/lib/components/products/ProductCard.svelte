@@ -1,7 +1,28 @@
 <script lang="ts">
 	import { productImageUrl, type Product } from '$lib/data/products';
+	import { trackProductAddedToCart } from '$lib/server/analytics';
 
 	let { product }: { product: Product } = $props();
+
+	function handleAddToCart(e: MouseEvent) {
+		e.preventDefault();
+		e.stopPropagation();
+
+		// Track analytics
+		trackProductAddedToCart(product.id, product.name, product.price);
+
+		// Add to localStorage cart
+		const cart = JSON.parse(localStorage.getItem('cart') ?? '[]');
+		const existingItem = cart.find((item: Product) => item.id === product.id);
+
+		if (existingItem) {
+			existingItem.quantity += 1;
+		} else {
+			cart.push({ ...product, quantity: 1 });
+		}
+
+		localStorage.setItem('cart', JSON.stringify(cart));
+	}
 </script>
 
 <a
@@ -54,6 +75,7 @@
 				<span class="text-sm font-bold text-blue-700">${product.price.toFixed(2)}</span>
 			</div>
 			<button
+				onclick={handleAddToCart}
 				class="flex h-7 w-7 items-center justify-center rounded bg-slate-200 text-blue-700 transition-colors hover:bg-blue-700 hover:text-white"
 				aria-label={`Add ${product.name} to cart`}
 			>

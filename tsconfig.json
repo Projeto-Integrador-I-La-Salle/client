@@ -1,4 +1,6 @@
 {
+	// If .svelte-kit/tsconfig.json is missing in some environments, fallback to a
+	// minimal standalone configuration by keeping compilerOptions here.
 	"extends": "./.svelte-kit/tsconfig.json",
 	"compilerOptions": {
 		"rewriteRelativeImportExtensions": true,
@@ -15,6 +17,8 @@
 	// Path aliases are handled by https://svelte.dev/docs/kit/configuration#alias
 	// except $lib which is handled by https://svelte.dev/docs/kit/configuration#files
 	//
-	// To make changes to top-level options such as include and exclude, we recommend extending
-	// the generated config; see https://svelte.dev/docs/kit/configuration#typescript
+	// Provide include/exclude so this file works standalone if the extended file
+	// is missing in some editor environments.
+	,"include": ["src/**/*", "src/node_modules/**/*"],
+	"exclude": ["node_modules", "build", ".svelte-kit"]
 }
