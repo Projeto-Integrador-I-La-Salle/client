@@ -12,6 +12,7 @@
 		{ label: 'Inicio', icon: 'home', href: '/products', matchPaths: ['/products'] },
 		{ label: 'Busca', icon: 'grid_view', href: '/browse', matchPaths: ['/browse'] },
 		{ label: 'Carrinho', icon: 'shopping_cart', href: '/cart', matchPaths: ['/cart'] },
+		{ label: 'Analytics', icon: 'monitoring', href: '/analytics', matchPaths: ['/analytics'] },
 		{ label: 'Conta', icon: 'person', href: '/account', matchPaths: ['/account'] }
 	];
 
